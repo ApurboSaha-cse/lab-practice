@@ -12,7 +12,7 @@ public class StudentList {
 					new InputStreamReader(
 							new FileInputStream("students.txt"))); 
 			String r = s.readLine();
-			String i[] = r.split(",");			
+			String i[] = r.split(", ");
 			for(String j : i) { System.out.println(j); }
 			} catch (Exception e){} 
 			System.out.println("Data Loaded.");
@@ -25,10 +25,9 @@ public class StudentList {
 					new InputStreamReader(
 							new FileInputStream("students.txt"))); 
 			String r = s.readLine();
-			System.out.println(r);
-			String i[] = r.split(",");	
+			String i[] = r.split(", ");
 			Random x = new Random();
-				int y = x.nextInt();
+				int y = x.nextInt(i.length);
 					System.out.println(i[y]);
 			} catch (Exception e){} 
 			System.out.println("Data Loaded.");			
@@ -40,7 +39,7 @@ public class StudentList {
 					new FileWriter("students.txt", true));
 			String t = args[0].substring(1);
 	        Date d = new Date();
-	        String df = "dd/mm/yyyy-hh:mm:ss a";
+	        String df = "dd-mm-yyyy-hh:mm:ss a";
 	        DateFormat dateFormat = new SimpleDateFormat(df);
 	        String fd= dateFormat.format(d);
 			s.write(", "+t+"\nList last updated on "+fd);
@@ -66,6 +65,10 @@ public class StudentList {
 						done=true;
 				}
 			}
+			if(!done)
+			{
+				System.out.println("Could not find " + t);
+			}
 			} catch (Exception e){} 
 			System.out.println("Data Loaded.");				
 		}
@@ -87,7 +90,7 @@ public class StudentList {
 					else { in_word=false;}			
 				}
 			}
-			System.out.println(count +" word(s) found " + a.length);
+			System.out.println(count +" word(s) found ");
 			} catch (Exception e){} 
 			System.out.println("Data Loaded.");				
 		}
