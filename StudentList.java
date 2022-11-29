@@ -9,7 +9,7 @@ public class StudentList {
 		return line;
 	}
 	public  static BufferedWriter getFileBufferedWriter() throws Exception{
-		return new BufferedWriter(new FileWriter(Constants.STUDENTS_FILE_NAME, true));
+		return new BufferedWriter(new FileWriter(Constants.STUDENTS_FILE_NAME, false));
 	}
 	public static void main(String[] args) {
 
@@ -23,10 +23,8 @@ public class StudentList {
 		if(args[0].equals(Constants.ARG_LIST_DATA)) {
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
-			String line  = getlineFromFile();
-			String students[] = line.split(Constants.WORDS_SPLIT_REGEX);
-			for(String student : students) {
-				System.out.println(student);
+			for(String student : getlineFromFile().split(Constants.WORDS_SPLIT_REGEX)) {
+				System.out.println(student.trim());
 			}
 			} catch (Exception e){} 
 			System.out.println(Constants.MSG_LOADED_DATA);
@@ -34,44 +32,35 @@ public class StudentList {
 		else if(args[0].equals(Constants.ARG_SHOW_RANDOM_DATA)) {
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
-				String line  = getlineFromFile();
-			String students[] = line.split(Constants.WORDS_SPLIT_REGEX);
-			Random random = new Random();
-				int index = random.nextInt(students.length);
-					System.out.println(students[index]);
+			String students[] = getlineFromFile().split(Constants.WORDS_SPLIT_REGEX);
+					System.out.println(students[new Random().nextInt(students.length)].trim());
 			} catch (Exception e){} 
 			System.out.println(Constants.MSG_LOADED_DATA);
 		}
 		else if(args[0].contains(Constants.ARG_ADD_DATA)){
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
+				String previousContent = getlineFromFile();
 				BufferedWriter bufferedWriter = getFileBufferedWriter();
-			String new_data = args[0].substring(1);
-	        Date date = new Date();
-	        String date_format_pattern = Constants.DATE_FORMAT_PATTERN;
-	        DateFormat dateFormat = new SimpleDateFormat(date_format_pattern);
-	        String formate_date= dateFormat.format(date);
-			bufferedWriter.write(Constants.WORDS_SPLIT_REGEX+new_data+Constants.MSG_DATA_UPDATED+formate_date);
+			bufferedWriter.write(previousContent);
+			bufferedWriter.write(Constants.WORDS_SPLIT_REGEX + " " +args[0].substring(1)+Constants.MSG_DATA_UPDATED+new SimpleDateFormat(Constants.DATE_FORMAT_PATTERN).format(new Date()));
 			bufferedWriter.close();
 			} catch (Exception e){}
-							
 			System.out.println(Constants.MSG_LOADED_DATA);
 		}
 		else if(args[0].contains(Constants.ARG_FIND_DATA)) {
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
-			String line = getlineFromFile();
-			String students[] = line.split(Constants.WORDS_SPLIT_REGEX);
+			String students[] = getlineFromFile().split(Constants.WORDS_SPLIT_REGEX);
 			boolean done = false;
-			String new_data = args[0].substring(1);
 			for(int idx = 0; idx<students.length && !done; idx++) {
-				if(students[idx].equals(new_data)) {
+				if(students[idx].trim().equals(args[0].substring(1))) {
 					System.out.println(Constants.MSG_DATA_FOUND);
 						done=true;
 				}
 			}
 			if(!done) {
-				System.out.println(Constants.MSG_DATA_NOT_FOUND + new_data);
+				System.out.println(Constants.MSG_DATA_NOT_FOUND);
 			}
 			} catch (Exception e){} 
 			System.out.println(Constants.MSG_LOADED_DATA);
@@ -79,11 +68,9 @@ public class StudentList {
 		else if(args[0].contains(Constants.ARG_COUNT_WORDS)) {
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
-			String line = getlineFromFile();
-			char students[] = line.toCharArray();
 			boolean in_word = false;
 			int count=0;
-			for(char student:students) {
+			for(char student : getlineFromFile().toCharArray()) {
 				if(student ==' ') {
 					if (!in_word) {
 						count++; in_word =true;
