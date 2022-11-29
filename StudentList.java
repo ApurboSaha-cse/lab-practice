@@ -59,7 +59,8 @@ public class StudentList {
 			else{
 				System.out.println(Constants.MSG_DATA_NOT_FOUND +args[0].substring(0));
 			}
-			} catch (Exception e){} 
+			} catch (Exception e){}
+			
 			System.out.println(Constants.MSG_LOADED_DATA);
 		}
 		else if(args[0].contains(Constants.ARG_COUNT_WORDS)) {
