@@ -52,15 +52,11 @@ public class StudentList {
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
 			String students[] = getlineFromFile().split(Constants.WORDS_SPLIT_REGEX);
-			boolean done = false;
-			for(int idx = 0; idx<students.length && !done; idx++) {
-				if(students[idx].trim().equals(args[0].substring(1))) {
-					System.out.println(Constants.MSG_DATA_FOUND);
-						done=true;
-				}
+			if(Arrays.stream(students).anyMatch(student -> args[0].substring(1).contains(student.trim()))) {
+				System.out.println(Constants.MSG_DATA_FOUND +args[0].substring(1));
 			}
-			if(!done) {
-				System.out.println(Constants.MSG_DATA_NOT_FOUND);
+			else{
+				System.out.println(Constants.MSG_DATA_NOT_FOUND +args[0].substring(0));
 			}
 			} catch (Exception e){} 
 			System.out.println(Constants.MSG_LOADED_DATA);
