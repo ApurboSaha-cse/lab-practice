@@ -3,11 +3,24 @@ import java.text.*;
 import java.util.*;
 public class StudentList {
 
+	/*
+	* Get first line from students.txt file.
+	* @return First line as string.
+	* @throws exception.
+	 */
+
 	public static String getlineFromFile() throws  Exception{
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(Constants.STUDENTS_FILE_NAME)));
 		String line = bufferedReader.readLine();
 		return line;
 	}
+
+	/*
+	*Get buffer writter object.
+	* @return bufferWritter of student file.
+	* @throws exception.
+	 */
+
 	public  static BufferedWriter getFileBufferedWriter() throws Exception{
 		return new BufferedWriter(new FileWriter(Constants.STUDENTS_FILE_NAME, false));
 	}
@@ -21,7 +34,7 @@ public class StudentList {
 		}
 
 //		Check arguments
-		if(args[0].equals(Constants.ARG_LIST_DATA)) {
+		if(args[0].equals(Constants.ARG_LIST_DATA)) {		//List data argument.
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
 			for(String student : getlineFromFile().split(Constants.WORDS_SPLIT_REGEX)) {
@@ -30,7 +43,7 @@ public class StudentList {
 			} catch (Exception e){} 
 			System.out.println(Constants.MSG_LOADED_DATA);
 		}
-		else if(args[0].equals(Constants.ARG_SHOW_RANDOM_DATA)) {
+		else if(args[0].equals(Constants.ARG_SHOW_RANDOM_DATA)) {		//Show random data argument.
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
 			String students[] = getlineFromFile().split(Constants.WORDS_SPLIT_REGEX);
@@ -38,7 +51,7 @@ public class StudentList {
 			} catch (Exception e){} 
 			System.out.println(Constants.MSG_LOADED_DATA);
 		}
-		else if(args[0].contains(Constants.ARG_ADD_DATA)){
+		else if(args[0].contains(Constants.ARG_ADD_DATA)){		//Add data argument
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
 				String previousContent = getlineFromFile();
@@ -49,7 +62,7 @@ public class StudentList {
 			} catch (Exception e){}
 			System.out.println(Constants.MSG_LOADED_DATA);
 		}
-		else if(args[0].contains(Constants.ARG_FIND_DATA)) {
+		else if(args[0].contains(Constants.ARG_FIND_DATA)) {		//Find data argument.
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
 			String students[] = getlineFromFile().split(Constants.WORDS_SPLIT_REGEX);
@@ -63,23 +76,15 @@ public class StudentList {
 			
 			System.out.println(Constants.MSG_LOADED_DATA);
 		}
-		else if(args[0].contains(Constants.ARG_COUNT_WORDS)) {
+		else if(args[0].contains(Constants.ARG_COUNT_WORDS)) {		//Count word arrgument.
 			System.out.println(Constants.MSG_LOADING_DATA);
 			try {
-			boolean in_word = false;
-			int count=0;
-			for(char student : getlineFromFile().toCharArray()) {
-				if(student ==' ') {
-					if (!in_word) {
-						count++; in_word =true;
-					}
-					else { in_word=false;}			
-				}
-			}
 			System.out.println(getlineFromFile().split(Constants.WORDS_SPLIT_REGEX).length + Constants.MSG_WORDS_FOUND);
 			} catch (Exception e){} 
 			System.out.println(Constants.MSG_LOADED_DATA);
 		}
+
+		//Checking argument.
 		else{
 			System.err.println(Constants.MSG_INVALID_ARGUMENTS);
 			System.err.println(Constants.MSG_USAGE);
